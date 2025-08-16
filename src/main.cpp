@@ -1,23 +1,27 @@
 /*  Rui Santos & Sara Santos - Random Nerd Tutorials
     THIS EXAMPLE WAS TESTED WITH THE FOLLOWING HARDWARE:
-    1) ESP32-2432S028R 2.8 inch 240×320 also known as the Cheap Yellow Display (CYD): https://makeradvisor.com/tools/cyd-cheap-yellow-display-esp32-2432s028r/
+    ESP32-2432S028R 2.8 inch 240×320 also known as the Cheap Yellow Display (CYD): 
+      https://makeradvisor.com/tools/cyd-cheap-yellow-display-esp32-2432s028r/
       SET UP INSTRUCTIONS: https://RandomNerdTutorials.com/cyd/
-    2) REGULAR ESP32 Dev Board + 2.8 inch 240x320 TFT Display: https://makeradvisor.com/tools/2-8-inch-ili9341-tft-240x320/ and https://makeradvisor.com/tools/esp32-dev-board-wi-fi-bluetooth/
-      SET UP INSTRUCTIONS: https://RandomNerdTutorials.com/esp32-tft/
-    Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files.
-    The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 
 #include <SPI.h>
 
-/*  Install the "TFT_eSPI" library by Bodmer to interface with the TFT Display - https://github.com/Bodmer/TFT_eSPI
-    *** IMPORTANT: User_Setup.h available on the internet will probably NOT work with the examples available at Random Nerd Tutorials ***
-    *** YOU MUST USE THE User_Setup.h FILE PROVIDED IN THE LINK BELOW IN ORDER TO USE THE EXAMPLES FROM RANDOM NERD TUTORIALS ***
-    FULL INSTRUCTIONS AVAILABLE ON HOW CONFIGURE THE LIBRARY: https://RandomNerdTutorials.com/cyd/ or https://RandomNerdTutorials.com/esp32-tft/   */
+/*  Install the "TFT_eSPI" library by Bodmer to interface with the TFT Display 
+      https://github.com/Bodmer/TFT_eSPI
+      *** IMPORTANT: User_Setup.h available on the internet will probably NOT work 
+      with the examples available at Random Nerd Tutorials
+      *** YOU MUST USE THE User_Setup.h FILE PROVIDED IN THE LINK BELOW IN ORDER
+      TO USE THE EXAMPLES FROM RANDOM NERD TUTORIALS
+      FULL INSTRUCTIONS AVAILABLE ON HOW CONFIGURE THE LIBRARY: 
+      https://RandomNerdTutorials.com/cyd/ or 
+      https://RandomNerdTutorials.com/esp32-tft/   
+*/
 #include <TFT_eSPI.h>
 
-// Install the "XPT2046_Touchscreen" library by Paul Stoffregen to use the Touchscreen - https://github.com/PaulStoffregen/XPT2046_Touchscreen
-// Note: this library doesn't require further configuration
+// Install the "XPT2046_Touchscreen" library by Paul Stoffregen to use the Touchscreen
+//   https://github.com/PaulStoffregen/XPT2046_Touchscreen
+//   Note: this library doesn't require further configuration
 #include <XPT2046_Touchscreen.h>
 
 TFT_eSPI tft = TFT_eSPI();
@@ -78,7 +82,8 @@ void setup() {
   touchscreenSPI.begin(XPT2046_CLK, XPT2046_MISO, XPT2046_MOSI, XPT2046_CS);
   touchscreen.begin(touchscreenSPI);
   // Set the Touchscreen rotation in landscape mode
-  // Note: in some displays, the touchscreen might be upside down, so you might need to set the rotation to 3: touchscreen.setRotation(3);
+  // Note: in some displays, the touchscreen might be upside down, so you 
+  // might need to set the rotation to 3: touchscreen.setRotation(3);
   touchscreen.setRotation(3);
 
   // Start the tft display
@@ -99,11 +104,12 @@ void setup() {
 }
 
 void loop() {
-  // Checks if Touchscreen was touched, and prints X, Y and Pressure (Z) info on the TFT display and Serial Monitor
+  // Checks if Touchscreen was touched, and prints X, Y and Pressure (Z) info 
+  // on the TFT display and Serial Monitor
   if (touchscreen.tirqTouched() && touchscreen.touched()) {
     // Get Touchscreen points
     TS_Point p = touchscreen.getPoint();
-    // Calibrate Touchscreen points with map function to the correct width and height
+    // Calibrate Touchscreen points with map function to git correct width and height
     x = map(p.x, 200, 3700, 1, SCREEN_WIDTH);
     y = map(p.y, 240, 3800, 1, SCREEN_HEIGHT);
     z = p.z;
